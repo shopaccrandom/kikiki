@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Keys</title>
+</head>
+<body>
+    <h1>Admin Panel - Keys</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Key</th>
+            <th>IP Encoded</th>
+            <th>Created At</th>
+            <th>Expires At</th>
+            <th>Actions</th>
+        </tr>
+        {% for key in keys %}
+        <tr>
+            <td>{{ key.id }}</td>
+            <td>{{ key.key }}</td>
+            <td>{{ key.ip_encoded }}</td>
+            <td>{{ key.created_at }}</td>
+            <td>{{ key.expires_at }}</td>
+            <td>
+                <a href="{{ url_for('delete_key', key_id=key.id) }}">Delete</a>
+                <form method="POST" action="{{ url_for('extend_key', key_id=key.id) }}" style="display:inline;">
+                    <input type="number" name="hours" value="24" min="1">
+                    <button type="submit">Extend</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
